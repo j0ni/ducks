@@ -1,0 +1,8 @@
+{
+  "name":"ducks",
+  "scripts":{},
+  "env":{},
+  "addons":[
+    "heroku-postgresql"
+  ]
+}
