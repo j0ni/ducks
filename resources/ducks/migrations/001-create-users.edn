@@ -1,0 +1,2 @@
+{:up   ["CREATE TABLE USERS (id UUID PRIMARY KEY, first_name VARCHAR(500), last_name VARCHAR(500), username VARCHAR(500));"]
+ :down ["DROP TABLE USERS;"]}
