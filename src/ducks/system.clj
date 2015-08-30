@@ -10,10 +10,13 @@
             [ring.component.jetty :refer [jetty-server]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.webjars :refer [wrap-webjars]]
-            [ducks.endpoint.example :refer [example-endpoint]]))
+            [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
+            [ducks.endpoint.users :refer [users-endpoint]]))
 
 (def base-config
   {:app {:middleware [[wrap-not-found :not-found]
+                      [wrap-json-body {:keywords? true :bigdecimals? true}]
+                      [wrap-json-response]
                       [wrap-webjars]
                       [wrap-defaults :defaults]]
          :not-found  (io/resource "ducks/errors/404.html")
@@ -27,9 +30,9 @@
          :http (jetty-server (:http config))
          :db   (hikaricp (:db config))
          :ragtime (ragtime (:ragtime config))
-         :example (endpoint-component example-endpoint))
+         :users (endpoint-component users-endpoint))
         (component/system-using
          {:http [:app]
-          :app  [:example]
+          :app  [:users]
           :ragtime [:db]
-          :example [:db]}))))
+          :users [:db]}))))
