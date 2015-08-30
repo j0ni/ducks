@@ -5,7 +5,8 @@
             [duct.middleware.errors :refer [wrap-hide-errors]]
             [meta-merge.core :refer [meta-merge]]
             [ducks.config :as config]
-            [ducks.system :refer [new-system]]))
+            [ducks.system :refer [new-system]]
+            [taoensso.timbre :as timbre :refer [info infof]]))
 
 (def prod-config
   {:app {:middleware     [[wrap-hide-errors :internal-error]]
@@ -19,4 +20,8 @@
 (defn -main [& args]
   (let [system (new-system config)]
     (println "Starting HTTP server on port" (-> system :http :port))
-    (component/start system)))
+    (infof "Starting HTTP server on port %d" (-> system :http :port))
+    (try
+      (component/start system)
+      (catch Exception e
+        (info e)))))
