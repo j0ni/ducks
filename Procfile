@@ -1,1 +1,1 @@
-web: java -jar target/ducks-standalone.jar
+web: java -jar target/uberjar/ducks-standalone.jar
