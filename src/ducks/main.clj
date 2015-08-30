@@ -6,7 +6,8 @@
             [meta-merge.core :refer [meta-merge]]
             [ducks.config :as config]
             [ducks.system :refer [new-system]]
-            [taoensso.timbre :as timbre :refer [info infof]]))
+            [taoensso.timbre :as timbre :refer [info infof]]
+            [duct.component.ragtime :as ragtime]))
 
 (def prod-config
   {:app {:middleware     [[wrap-hide-errors :internal-error]]
@@ -22,6 +23,10 @@
   (let [system (new-system config)]
     (infof "Starting HTTP server on port %d" (-> system :http :port))
     (try
-      (component/start system)
+      (-> (component/start system)
+          ;; Would be nice for this to be done before bringing the
+          ;; HTTP component online.
+          (:ragtime)
+          (ragtime/migrate))
       (catch Exception e
         (info e)))))
