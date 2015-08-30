@@ -18,8 +18,8 @@
               prod-config))
 
 (defn -main [& args]
+  (info "Booting ducks...")
   (let [system (new-system config)]
-    (println "Starting HTTP server on port" (-> system :http :port))
     (infof "Starting HTTP server on port %d" (-> system :http :port))
     (try
       (component/start system)
