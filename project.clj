@@ -2,7 +2,8 @@
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
-  :dependencies [[org.clojure/clojure "1.7.0"]
+  :dependencies [;; this all comes from Duct
+                 [org.clojure/clojure "1.7.0"]
                  [com.stuartsierra/component "0.2.3"]
                  [compojure "1.4.0"]
                  [duct "0.3.0"]
@@ -17,7 +18,9 @@
                  [org.webjars/normalize.css "3.0.2"]
                  [duct/hikaricp-component "0.1.0"]
                  [org.postgresql/postgresql "9.4-1201-jdbc4"]
-                 [duct/ragtime-component "0.1.2"]]
+                 [duct/ragtime-component "0.1.2"]
+                 ;; that's the end of Duct's bits
+                 [com.taoensso/timbre "4.1.1"]]
   :plugins [[lein-environ "1.0.0"]
             [lein-gen "0.2.2"]]
   :generators [[duct/generators "0.3.0"]]
