@@ -11,7 +11,9 @@
             [ring.middleware.defaults :refer [wrap-defaults api-defaults site-defaults]]
             [ring.middleware.webjars :refer [wrap-webjars]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
-            [ducks.endpoint.users :refer [users-endpoint]]))
+            [ducks.endpoint.users :refer [users-endpoint]]
+            [ducks.endpoint.auth :refer [auth-endpoint]]
+            [compojure.core :refer [context]]))
 
 (def base-config
   {:app {:middleware [[wrap-not-found :not-found]
@@ -30,9 +32,11 @@
          :http (jetty-server (:http config))
          :db   (hikaricp (:db config))
          :ragtime (ragtime (:ragtime config))
-         :users (endpoint-component users-endpoint))
+         :users (endpoint-component #(context "/users" [] (users-endpoint %)))
+         :auth (endpoint-component #(context "/auth" [] (auth-endpoint %))))
         (component/system-using
          {:http [:app]
-          :app  [:users]
+          :app [:users :auth]
           :ragtime [:db]
-          :users [:db]}))))
+          :users [:db]
+          :auth [:db]}))))
