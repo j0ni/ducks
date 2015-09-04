@@ -1,7 +1,7 @@
 (ns ducks.endpoint.users
   (:require [compojure.core :refer (GET POST PUT DELETE routes)]
             [ring.util.response :as response]
-            [taoensso.timbre :refer (info)]
+            [taoensso.timbre :refer (info infof)]
             [clojure.java.jdbc :as jdbc]
             [clj-uuid :as uuid]
             [ring.util.http-response :as http-response]))
@@ -81,11 +81,13 @@
    (GET "/:id" [id]
      (find-one-user db id))
    
-   (POST "/" [username first-name last-name]
-     (create-user db username first-name last-name))
+   (POST "/" {:keys [body]}
+     (let [{:strs [username first-name last-name]} body]
+       (create-user db username first-name last-name)))
    
-   (PUT "/:id" [id username first-name last-name]
-     (update-user db id username first-name last-name))
+   (PUT "/:id" [id :as {body :body}]
+     (let [{:strs [username first-name last-name]} body]
+       (update-user db id username first-name last-name)))
    
    (DELETE "/:id" [id]
      (delete-user db id))))

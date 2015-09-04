@@ -8,7 +8,7 @@
             [duct.middleware.not-found :refer [wrap-not-found]]
             [meta-merge.core :refer [meta-merge]]
             [ring.component.jetty :refer [jetty-server]]
-            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.middleware.defaults :refer [wrap-defaults api-defaults site-defaults]]
             [ring.middleware.webjars :refer [wrap-webjars]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
             [ducks.endpoint.users :refer [users-endpoint]]))
@@ -20,7 +20,7 @@
                       [wrap-webjars]
                       [wrap-defaults :defaults]]
          :not-found  (io/resource "ducks/errors/404.html")
-         :defaults   (meta-merge site-defaults {:static {:resources "ducks/public"}})}
+         :defaults   (meta-merge api-defaults {:static {:resources "ducks/public"}})}
    :ragtime {:resource-path "ducks/migrations"}})
 
 (defn new-system [config]
