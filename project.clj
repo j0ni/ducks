@@ -20,7 +20,12 @@
                  [org.postgresql/postgresql "9.4-1201-jdbc4"]
                  [duct/ragtime-component "0.1.2"]
                  ;; that's the end of Duct's bits
-                 [com.taoensso/timbre "4.1.1"]]
+                 [com.taoensso/timbre "4.1.1"]
+                 [ring/ring-json "0.4.0"]
+                 [org.clojure/java.jdbc "0.4.1"]
+                 [danlentz/clj-uuid "0.1.6"]
+                 [metosin/ring-http-response "0.6.4"]
+                 [crypto-password "0.1.3"]]
   :plugins [[lein-environ "1.0.0"]
             [lein-gen "0.2.2"]]
   :generators [[duct/generators "0.3.0"]]
