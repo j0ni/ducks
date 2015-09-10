@@ -1,12 +1,12 @@
-(ns ducks.endpoint.example-test
+(ns ducks.endpoint.user-test
   (:require [com.stuartsierra.component :as component]
             [clojure.test :refer :all]
             [kerodon.core :refer :all]
             [kerodon.test :refer :all]
-            [ducks.endpoint.example :as example]))
+            [ducks.endpoint.user :as user]))
 
 (def handler
-  (example/example-endpoint {}))
+  (user/user-endpoint {}))
 
 (deftest smoke-test
   (testing "index page exists"
